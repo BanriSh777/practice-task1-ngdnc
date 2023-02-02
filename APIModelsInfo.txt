@@ -1,0 +1,42 @@
+CategoryController Actions:
+-------
+get 	categories	/api/category/all
+get		categories  /api/category					-> paginated
+get 	category	/api/category/{id}
+post 	category	/api/category					-> data
+update	category	/api/category/{id}				-> data
+delete	category	/api/category/{id}
+search	categories	/api/category/search			-> key, paginated
+
+ProductController Actions:
+-------
+get 	products 	/api/product					-> paginated
+get 	products 	/api/product/category/{cid} 	-> categoryid, paginated
+get 	product		/api/product/{id}
+post 	product		/api/product					-> data
+update	product		/api/product/{id}				-> data
+delete	product		/api/product/{id}
+search	products	/api/product/search				-> key, paginated
+
+Models:
+-------
+PaginationModel
+	PageSize, number (with cap of 20)
+	SortBy, string
+	PageNumber, number
+PageModel
+	PageNumber, string; PageSize, number; TotalPages, number
+	RecordsInPage, number; TotalRecords, number
+	SortedBy, string; IsDesc, bool	
+PagedListModel
+		-> category: getall, products: getall under category, getall
+		-> category: product: search (name, id)
+
+CategoryModel -> get, getall
+CategoryCreateUpdateModel -> getall, create, update
+ProductModel -> get
+ProductSummaryModel -> getall
+ProductCreateUpdateModel -> create, update
+-------
+
+

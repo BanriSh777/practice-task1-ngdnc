@@ -1,0 +1,11 @@
+:host {
+  @apply flex flex-col h-screen;
+}
+
+cat-footer {
+  @apply mt-auto;
+}
+
+:host {
+  @apply px-2 md:px-16 max-w-screen-2xl min-h-screen;
+}

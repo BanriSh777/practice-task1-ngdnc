@@ -1,0 +1,86 @@
+<div
+  *ngIf="product$ | async as product; else notfound"
+  class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 ml-auto mr-auto"
+>
+  <!-- <a href="#">
+    <img class="rounded-t-lg" src="" alt="productImage" />
+  </a> -->
+  <div class="p-5">
+    <div
+      class="flex items-start justify-between p-4 border-b rounded-t mb-4 dark:border-gray-600"
+    >
+      <h5
+        class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
+      >
+        {{ product.productName }}
+      </h5>
+      <button
+        type="button"
+        class="text-gray-900 hover:text-indigo-500 hover:bg-transparent bg-gray-200 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+        [routerLink]="'/products/update/' + id"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="w-6 h-6"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
+          />
+        </svg>
+        Update Product
+        <span class="sr-only">UPDATE</span>
+      </button>
+    </div>
+
+    <p
+      class="mb-3 font-normal text-blue-400 border rounded-md w-fit p-2 hover:text-blue-700 text-sm dark:text-gray-400"
+    >
+      <a [routerLink]="'/category/view/' + product.categoryId">{{
+        product.categoryName
+      }}</a>
+    </p>
+    <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
+      {{ product.description }}
+    </p>
+    <p class="flex gap-6 lg:flex-1 max-sm:flex-col max-sm:gap-2">
+      <span
+        >Current Price:
+        <span class="text-rose-700">{{
+          product.price | currency : "INR"
+        }}</span></span
+      >
+      <span>
+        M.R.P:
+        <span class="text-red-500">{{
+          product.mrp | currency : "INR"
+        }}</span></span
+      >
+      <span>
+        Discount:
+        <span class="text-yellow-500">{{
+          product.discount | currency : "INR"
+        }}</span></span
+      >
+    </p>
+    <div class="flex flex-col lg:items-center">
+      <h2 class="mt-2 font-bold">Dimensions</h2>
+      <ul class="mb-2">
+        <li>Height - {{ product.height }}</li>
+        <li>Depth - {{ product.depth }}</li>
+        <li>Width - {{ product.width }}</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<ng-template #notfound>
+  <div class="p-10 text-center text-2xl font-bold text-gray-800">
+    No Product Found! with id "{{ id }}"
+  </div>
+</ng-template>

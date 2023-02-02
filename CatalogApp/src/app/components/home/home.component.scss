@@ -1,0 +1,7 @@
+.btn {
+  @apply rounded-md   hover:bg-indigo-600  px-4 py-2 max-w-sm font-semibold text-white bg-indigo-500 hover:transition-colors;
+}
+
+:host {
+  @apply py-12 md:py-20 sm:text-center;
+}

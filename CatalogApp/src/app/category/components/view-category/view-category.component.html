@@ -1,0 +1,142 @@
+<!-- Category -->
+<div
+  class="pt-10 bg-white"
+  *ngIf="category$ | async as category; else notfound"
+>
+  <div
+    class="flex items-start justify-between p-4 border-b rounded-t mb-4 dark:border-gray-600"
+  >
+    <h5
+      class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
+    >
+      {{ category.categoryName }}
+    </h5>
+    <button
+      type="button"
+      class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+      [routerLink]="'/category/update/' + category.categoryId"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+        class="w-6 h-6"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
+        />
+      </svg>
+      Update Category
+      <span class="sr-only">UPDATE</span>
+    </button>
+  </div>
+  <div class="text-center text-sm m-4 text-slate-400 font-thin">
+    <span class="text-green-400 text-lg font-semibold">{{
+      category.categoryDescription
+    }}</span>
+    [{{ category.categoryId }}]
+  </div>
+</div>
+
+<!-- Product List -->
+<section class="py-10 bg-gray-100 px-10" *ngIf="category$ | async">
+  <div
+    *ngIf="(products$ | async)?.data?.length; else noItems"
+    class="mx-auto grid max-w-6xl grid-cols-1 gap-6 p-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
+  >
+    <article
+      *ngFor="let product of (products$ | async)?.data"
+      class="rounded-xl bg-white p-3 shadow-lg hover:shadow-xl hover:transform hover:scale-105 duration-200"
+    >
+      <a [routerLink]="'../../../products/view/' + product.productId">
+        <!-- <div class="relative flex items-end overflow-hidden rounded-xl">
+          <img src="" alt="Product Image" />
+        </div> -->
+
+        <div class="mt-1 p-2">
+          <h2 class="text-2xl font-bold text-gray-800">
+            {{ product.productName }}
+          </h2>
+          <p class="mt-1 text-sm text-slate-400">{{ product.productId }}</p>
+          <p class="mt-1 text-sm text-slate-900">{{ product.description }}</p>
+
+          <div class="mt-3 flex items-end justify-between">
+            <p>
+              <span class="text-lg font-bold text-blue-500">{{
+                product.price | currency : "INR"
+              }}</span>
+              <!-- <span class="text-sm text-slate-400">/units</span> -->
+            </p>
+          </div>
+        </div>
+      </a>
+    </article>
+  </div>
+</section>
+
+<!-- pagination -->
+<div class="mt-4 mb-8 ml-auto grid place-items-center">
+  <nav
+    aria-label="Page navigation"
+    *ngIf="(products$ | async)?.page?.totalPages"
+  >
+    <ul class="inline-flex -space-x-px">
+      <li>
+        <button
+          *ngIf="products$ | async as products$"
+          (click)="prev((products$?.page)!.pageNumber)"
+          class="px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700"
+          [ngClass]="isFirst ? 'hidden' : ''"
+        >
+          Previous
+        </button>
+      </li>
+
+      <li
+        *ngFor="let p of pageNumbers"
+        [ngClass]="isFirst ? 'rounded-l-lg' : ''"
+      >
+        <button
+          *ngIf="products$ | async as products$"
+          (click)="page(p + 1)"
+          [ngClass]="[
+            p + 1 == products$.page.pageNumber
+              ? 'px-3 py-2 leading-tight  text-blue-600 border bg-blue-50 border-gray-300 hover:bg-blue-100 hover:text-blue-700'
+              : 'px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700',
+            isFirst && p + 1 == products$.page.pageNumber ? 'rounded-l-lg' : '',
+            isLast && p + 1 == products$.page.pageNumber ? 'rounded-r-lg' : '',
+            products$.page.totalPages == 1 ? 'hidden' : ''
+          ]"
+        >
+          {{ p + 1 }}
+        </button>
+      </li>
+
+      <li>
+        <button
+          *ngIf="products$ | async as products$"
+          (click)="next((products$?.page)!.pageNumber)"
+          class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700"
+          [ngClass]="isLast ? 'hidden' : ''"
+        >
+          Next
+        </button>
+      </li>
+    </ul>
+  </nav>
+</div>
+
+<script src="assets\flowbite.js"></script>
+
+<ng-template class="mx-auto max-w-6xl py-10 px-20" #noItems>
+  No Items Found</ng-template
+>
+<ng-template #notfound>
+  <div class="p-10 text-center text-2xl font-bold text-gray-800">
+    No Category Found with id "{{ id }}"
+  </div>
+</ng-template>

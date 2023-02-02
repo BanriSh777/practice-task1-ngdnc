@@ -1,0 +1,88 @@
+<section
+  class="mx-auto my-auto py-12 md:py-20 flex max-lg:flex-col sm:gap-20 gap-10"
+>
+  <section class="flex-1">
+    <h1 class="font-semibold text-3xl leading-tight text-slate-800">
+      You Can Browse
+      <span class="underline-offset-2 underline">By Category</span> or
+      <span class="underline-offset-2 underline">By Name</span> of the Product
+    </h1>
+  </section>
+  <section class="grid flex-1">
+    <div class="links flex gap-6 max-lg:flex-col items-center">
+      <a routerLink="category" class="w-fit">
+        <button class="btn">See All Categories</button>
+      </a>
+      <a routerLink="products" class="w-fit"
+        ><button class="btn">See All Products</button></a
+      >
+    </div>
+  </section>
+</section>
+
+<section class="justify-center sm:p-8 mt-6 relative">
+  <form action="/products/search" class="flex items-center">
+    <input
+      class="flex-grow border-grey-300 pr-14 rounded-md hover:border-indigo-400 focus:border-indigo-500 focus:outline-none"
+      type="text"
+      (keyup)="search($event)"
+      placeholder="Search with Product/Category-Name/Id"
+    />
+    <div
+      class="absolute flex right-14 top-auto bottom-auto text-slate-500 rounded-r-md"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        class="w-6 h-6"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M10.5 3.75a6.75 6.75 0 100 13.5 6.75 6.75 0 000-13.5zM2.25 10.5a8.25 8.25 0 1114.59 5.28l4.69 4.69a.75.75 0 11-1.06 1.06l-4.69-4.69A8.25 8.25 0 012.25 10.5z"
+          clip-rule="evenodd"
+        />
+      </svg>
+    </div>
+  </form>
+  <div class="search">
+    <div *ngIf="(categories$ | async)?.data as categories" class="">
+      <div *ngIf="categories.length">
+        <h3>
+          Categories, No. of. Matches:
+          {{ (categories$ | async)?.page?.totalRecords }}
+        </h3>
+        <ul>
+          <li
+            *ngFor="let category of categories"
+            class="text-blue-500 hover:text-blue-700"
+          >
+            <a [routerLink]="'/category/view/' + category.categoryId"
+              >{{ category.categoryId }} - {{ category.categoryName }}</a
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+    <hr class="mb-3 border-gray-200 sm:mx-auto lg:my-8" />
+
+    <div *ngIf="(products$ | async)?.data as products" class="">
+      <div *ngIf="products.length">
+        <h3>
+          Products, No. of. Matches:
+          {{ (products$ | async)?.page?.totalRecords }}
+        </h3>
+        <ul>
+          <li
+            *ngFor="let product of products"
+            class="text-blue-500 hover:text-blue-700"
+          >
+            <a [routerLink]="'/products/view/' + product.productId"
+              >{{ product.productId }} - {{ product.productName }}</a
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
