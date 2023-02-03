@@ -2,14 +2,11 @@
 
 const defaultTheme = require("tailwindcss/defaultTheme");
 module.exports = {
-  purge: {
-    enabled: true,
-    content: [
-      "./src/**/*.html",
-      "./src/**/*.ts",
-      "./node_modules/flowbite/**/*.js",
-    ],
-  },
+  content: [
+    "./src/**/*.html",
+    "./src/**/*.ts",
+    "./node_modules/flowbite/**/*.js",
+  ],
   theme: {
     extend: {
       fontFamily: {
