@@ -13,14 +13,23 @@ import { Component } from '@angular/core';
 export class HomeComponent {
   categories$!: Observable<Response<Category[]>>;
   products$!: Observable<Response<ProductS[]>>;
+  hideCatSearchResults = false;
+  hideProdSearchResults = false;
   constructor(private searchService: SearchService) {}
   search(event: any) {
-    console.log(this.searchService.search(event.target.value));
-    let x = this.searchService.search(event.target.value);
-    if (x) {
-      this.categories$ = x[0];
-      this.products$ = x[1];
+    var key = event.target.value;
+    if (key?.trim() && key) {
+      let x = this.searchService.search(key);
+      console.log(this.searchService.search(key));
+      if (x) {
+        this.categories$ = x[0];
+        this.products$ = x[1];
+        this.hideProdSearchResults = false;
+        this.hideCatSearchResults = false;
+      }
     } else {
+      this.hideCatSearchResults = true;
+      this.hideProdSearchResults = true;
     }
   }
 }
