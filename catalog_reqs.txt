@@ -1,0 +1,70 @@
+done:	
+	- be:
+		- DBFirst: MySQL-Entities, Relations & Data
+		- EF Core Fromework, dependency injection
+		- Basic crud, pagination, search
+		- auto-mapping (MapperClasses): [DTOs <-> ServiceModels <-> DBEntities]
+		- structure:refactored
+			webproj: controllers
+			modelproj: models
+			serviceproj: services
+			dbproj: Repository, context
+		- sorting
+		- pagination
+		- swagger
+	- fe:
+		- home
+		- crud
+		- detail
+		- about
+		
+notes:
+	uri ?
+	 &PageSize=14&PageNumber=2
+
+	catname:
+		uri -https://localhost:7197/api/category
+		asc	- uri?SortCategoryName=true
+		dsc - uri?SortCategoryName=true&SortDescending=true
+
+	catid:
+		uri -https://localhost:7197/api/category
+		asc - uri + ?SortCategoryId=true
+		dsc - asc &SortDescending=true
+
+	catid-products:
+		price:
+			asc - uri/ {cat_id} /products?SortPrice=true
+			dsc - asc &SortDescending=true
+		catname:
+			asc - uri/ {cat_id} /products?SortCategoryName=true
+			dsc - asc &SortDescending=true
+		pid:
+			asc - uri/ {cat_id} /products?SortProductId=true
+			dsc - asc &SortDescending=true
+		pname:
+			asc - uri/ {cat_id} /products?SortProductName=true
+			dsc - asc &SortDescending=true
+	pagination:
+	 - default pagesize of : 14
+	 - pagenumber
+
+	category:
+	 - order by/desc: CategoryName - getall - cname
+	 - order by/desc: CategoryId - getall - cid
+	 - order by/desc: ProductName - get - pname
+	product:
+	 - order by/desc: CategoryId - getall - cid
+	 - order by/desc: CategoryName - getall - cname
+	 - order by/desc: ProductName - getall - pname
+	 - order by/desc: ProductId - getall - pid
+	 - order by/desc: Price - getall - price
+	 
+	search:
+	 categoryname, categoryid 
+	 productname, productid
+	 
+pending:
+	be:
+		- filter
+		- exception-handling, logging

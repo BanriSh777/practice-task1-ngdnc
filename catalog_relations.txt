@@ -1,0 +1,41 @@
+#CatalogDB_ERDiagram
+Product
+rel >- Category.CategoryCode 
+-
+ProductCode pk string
+ProductName UNIQUE string 
+CategoryCode string FK >- Category.CategoryCode
+ShortDescription string
+
+
+ProductDetails
+-
+ProductCode string pk FK - Product.ProductCode
+Image BLOB
+Depth
+Height
+Width
+
+Category
+-
+CategoryCode pk
+CategoryName UNIQUE string
+CategoryDescription string
+
+ProductStore
+-
+ProductStoreCode pk string
+Location string
+
+Price
+-
+ProductCode string PK FK - Product.ProductCode
+Price money
+MRP money
+Discount money
+
+Stock
+-
+ProductCode string pk fk >- Product.ProductCode
+ProductStoreCode string pk fk >- ProductStore.ProductStoreCode
+Quantity int default=0
